@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  pneumonia-cnn:
+    build: .
+    image: pneumonia-xray-cnn
+    container_name: pneumonia-xray-cnn
+
+    # ── GPU access ────────────────────────────────────────────────────────────
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+    # ── Port: host:container ──────────────────────────────────────────────────
+    ports:
+      - "8888:8888"
+
+    # ── Mount data and outputs so they persist outside the container ──────────
+    volumes:
+      - ./data:/workspace/data
+      - ./models:/workspace/models
+      - ./results:/workspace/results
+      - ./notebooks:/workspace/notebooks
+
+    # ── Keep container alive ──────────────────────────────────────────────────
+    stdin_open: true
+    tty: true
