@@ -1,0 +1,74 @@
+# ── Dataset ───────────────────────────────────────────────────────────────────
+data/raw/
+data/processed/
+*.csv
+*.zip
+*.tar.gz
+
+# ── Trained models & checkpoints ──────────────────────────────────────────────
+models/
+*.keras
+*.h5
+*.pt
+*.pth
+*.ckpt
+*.pb
+
+# ── Results & plots ───────────────────────────────────────────────────────────
+results/
+reports/
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.so
+*.dylib
+
+# ── Virtual environments ──────────────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+.conda/
+
+# ── Jupyter Notebooks ─────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# ── TensorFlow / Keras internals ──────────────────────────────────────────────
+logs/
+experiments/*/logs/
+tensorboard_logs/
+*.tfevents.*
+
+# ── Environment & secrets ─────────────────────────────────────────────────────
+.env
+.env.*
+*.pem
+*.key
+secrets.yaml
+
+# ── macOS ─────────────────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# ── IDEs ──────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── Misc ──────────────────────────────────────────────────────────────────────
+*.log
+*.tmp
+*.bak

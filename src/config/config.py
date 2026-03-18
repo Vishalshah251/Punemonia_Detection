@@ -19,3 +19,11 @@ EPOCHS      = 50
 LR          = 1e-3
 CLASSES     = ["NORMAL", "PNEUMONIA"]
 MODEL_PATH  = os.path.join(MODEL_DIR, "pneumonia_cnn.keras")
+
+# ── Transfer Learning ──────────────────────────────────────────────────────────
+TL_EPOCHS_FROZEN    = 10    # Phase 1: train head only (base frozen)
+TL_EPOCHS_FINETUNE  = 30    # Phase 2: unfreeze top layers and fine-tune
+TL_LR_FROZEN        = 1e-3  # Higher LR for frozen phase
+TL_LR_FINETUNE      = 1e-5  # Low LR to avoid destroying pretrained weights
+TL_UNFREEZE_FROM    = 100   # Unfreeze layers from this index onward
+TL_MODEL_PATH       = os.path.join(MODEL_DIR, "pneumonia_mobilenetv2.keras")
