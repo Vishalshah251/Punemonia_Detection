@@ -6,17 +6,17 @@ data/processed/
 *.tar.gz
 
 # ── Trained models & checkpoints ──────────────────────────────────────────────
-models/
-*.keras
-*.h5
-*.pt
-*.pth
-*.ckpt
-*.pb
+# models/
+# *.keras
+# *.h5
+# *.pt
+# *.pth
+# *.ckpt
+# *.pb
 
 # ── Results & plots ───────────────────────────────────────────────────────────
-results/
-reports/
+# results/
+# reports/
 
 # ── Python ────────────────────────────────────────────────────────────────────
 __pycache__/
