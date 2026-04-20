@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>NSCameraUsageDescription</key>
+    <string>Required to take X-ray photos for pneumonia detection.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Required to select X-ray images for pneumonia detection.</string>
+    <key>CFBundleName</key>
+    <string>Pneumonia Detector</string>
+    <key>CFBundleDisplayName</key>
+    <string>Pneumonia Detector</string>
+</dict>
+</plist>
