@@ -6,13 +6,15 @@ data/processed/
 *.tar.gz
 
 # ── Trained models & checkpoints ──────────────────────────────────────────────
-# models/
-# *.keras
-# *.h5
-# *.pt
-# *.pth
-# *.ckpt
-# *.pb
+models/
+*.keras
+*.h5
+*.pt
+*.pth
+
+11
+*.ckpt
+*.pb
 
 # ── Results & plots ───────────────────────────────────────────────────────────
 # results/

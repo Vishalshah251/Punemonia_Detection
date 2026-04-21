@@ -1,47 +1,36 @@
-import 'dart:io';
-import 'package:tflite_flutter/tflite_flutter.dart';
-import 'package:image/image.dart' as img;
+import 'dart:typed_data';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+class PredictionResult {
+  final String label;
+  final Uint8List heatmapBytes;
+
+  PredictionResult({required this.label, required this.heatmapBytes});
+}
 
 class Classifier {
-  static const String _modelPath = 'assets/models/mobilenetv2_dynamic.tflite';
-  static const int _inputSize = 224;
+  static const String _baseUrl = 'http://localhost:5001';
 
-  late Interpreter _interpreter;
+  Future<PredictionResult> predict(Uint8List imageBytes, String filename) async {
+    final request = http.MultipartRequest('POST', Uri.parse('$_baseUrl/gradcam'));
+    request.files.add(http.MultipartFile.fromBytes(
+      'image',
+      imageBytes,
+      filename: filename,
+    ));
 
-  Future<void> load() async {
-    _interpreter = await Interpreter.fromAsset(_modelPath);
-  }
+    final streamed = await request.send();
+    final response = await http.Response.fromStream(streamed);
 
-  /// Returns a map with keys: label (String), confidence (double 0–1)
-  Map<String, dynamic> predict(File imageFile) {
-    // 1. Decode and resize to 224×224 grayscale
-    final raw = img.decodeImage(imageFile.readAsBytesSync())!;
-    final resized = img.copyResize(raw, width: _inputSize, height: _inputSize);
-    final grayscale = img.grayscale(resized);
+    if (response.statusCode != 200) {
+      throw Exception('API error ${response.statusCode}: ${response.body}');
+    }
 
-    // 2. Build input tensor [1, 224, 224, 1] normalized 0–1
-    final input = List.generate(
-      1,
-      (_) => List.generate(
-        _inputSize,
-        (y) => List.generate(
-          _inputSize,
-          (x) => [grayscale.getPixel(x, y).r / 255.0],
-        ),
-      ),
-    );
+    final data    = jsonDecode(response.body) as Map<String, dynamic>;
+    final label   = data['label'] as String;
+    final heatmap = base64Decode(data['heatmap_b64'] as String);
 
-    // 3. Run inference
-    final output = [[0.0]];
-    _interpreter.run(input, output);
-
-    final confidence = output[0][0];
-    final label = confidence >= 0.5 ? 'PNEUMONIA' : 'NORMAL';
-
-    return {'label': label, 'confidence': confidence};
-  }
-
-  void dispose() {
-    _interpreter.close();
+    return PredictionResult(label: label, heatmapBytes: heatmap);
   }
 }

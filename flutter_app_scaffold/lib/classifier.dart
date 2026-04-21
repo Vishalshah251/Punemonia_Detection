@@ -10,7 +10,7 @@ class PredictionResult {
 }
 
 class Classifier {
-  static const String _baseUrl = 'http://localhost:5000';
+  static const String _baseUrl = 'http://localhost:5001';
 
   Future<PredictionResult> predict(Uint8List imageBytes, String filename) async {
     final request = http.MultipartRequest('POST', Uri.parse('$_baseUrl/gradcam'));
